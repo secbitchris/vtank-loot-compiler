@@ -1,0 +1,38 @@
+# Example loot profile. Rules are evaluated top-down; the FIRST match wins,
+# so put specific/high-priority rules above broad ones.
+# Every condition inside a rule's `when:` must be true (logical AND).
+
+rules:
+  - name: "Rares"
+    action: keep
+    when:
+      value_ge: 1                 # rares always report value; tighten as needed
+
+  - name: "Quest Items"
+    action: keepupto
+    count: 5
+    when:
+      name_matches: "Coda|Tattered Virindi Cloak|Forager Captain's Resonator"
+
+  - name: "High-value loot"
+    action: keep
+    when:
+      value_ge: 50000
+
+  - name: "Good melee weapons"
+    action: keep
+    when:
+      type: MeleeWeapon
+      min_damage_ge: 20
+
+  - name: "Salvage decent armor"
+    action: salvage
+    when:
+      type: Armor
+      workmanship_ge: 8
+
+  - name: "Vendor trash jewelry"
+    action: sell
+    when:
+      type: Jewelry
+      value_le: 5000

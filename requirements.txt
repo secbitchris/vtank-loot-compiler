@@ -1,0 +1,3 @@
+# utl.py (the codec) is pure standard library.
+# Only the YAML compiler (utl_compile.py) needs this.
+PyYAML>=5.1

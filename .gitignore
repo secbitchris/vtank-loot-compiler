@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Compiled output (keep loot.example.yaml, ignore generated profiles)
+/*.utl
+!tests/fixtures/*.utl
+
+# Editor / OS
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
