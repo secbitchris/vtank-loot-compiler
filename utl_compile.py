@@ -26,9 +26,10 @@ R_SPELLCOUNT_GE = 8
 R_MINDAMAGE_GE = 10
 R_LONG_E, R_LONG_NE = 12, 13
 
-# IntValueKey
+# IntValueKey (AC PropertyInt codes)
 IVK = {"value": 0x13, "total_value": 20, "armor_level": 0x1C, "workmanship": 0x69,
-       "material": 0x83, "stack_count": 0xD000006, "max_damage": 0xD000022}
+       "material": 0x83, "burden": 0x05, "stack_count": 0xD000006,
+       "max_damage": 0xD000022}
 # StringValueKey
 SVK_NAME = 1
 # ObjectClass (0-based, in source order)

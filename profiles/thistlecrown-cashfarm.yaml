@@ -1,0 +1,56 @@
+# Thistlecrown — VALUE-TO-BURDEN cash farm (level ~47 bow char, buffed Str ~130).
+#
+# Goal: maximum pyreals per unit of carry weight. With low Strength, BURDEN is
+# the binding constraint — the corpse always has more value than you can haul, so
+# we grab dense value (rings, gems, trade notes: thousands of value for tens of
+# burden) and LEAVE heavy armor behind even when it's worth a little.
+#
+# The trick is burden_le: the lighter an item, the lower the value bar to grab
+# it. Heavy loot (armor ~100-300 burden) only clears the top "jackpot" tier.
+#
+# First match wins. Keep your own gear-upgrade grabs (bows) tiny; everything
+# else is `sell` so VTank auto-vendors it near a shopkeeper.
+#
+# Compile: python utl_compile.py profiles/thistlecrown-cashfarm.yaml -o ThistlecrownCash.utl
+
+rules:
+  # ---------- Currency & near-weightless value: always grab ----------
+  - name: "Trade Notes (portable cash, ~0 burden)"
+    action: keep
+    when:
+      type: TradeNote
+
+  - name: "Mana Stones (dense value)"
+    action: sell
+    when:
+      type: ManaStone
+      value_ge: 300
+
+  # ---------- Your upgrade path: keep cast bows to inspect ----------
+  - name: "Cast bows / launchers (potential upgrade)"
+    action: keep
+    when:
+      type: MissileWeapon
+      spell_count_ge: 3
+
+  # ---------- Value-to-burden gradient (lighter = lower value bar) ----------
+  # Featherweight jackpots: rings, gems, small trinkets. Big value, tiny burden.
+  - name: "Ultra-dense (<=50 burden, >=800 value)"
+    action: sell
+    when:
+      burden_le: 50
+      value_ge: 800
+
+  # Light-to-medium items worth real money: light weapons, foci, heavier jewelry.
+  - name: "Dense (<=150 burden, >=2500 value)"
+    action: sell
+    when:
+      burden_le: 150
+      value_ge: 2500
+
+  # ---------- Jackpot: grab big money regardless of weight ----------
+  # A single 10k+ item pays for the burden even if it's a heavy armor piece.
+  - name: "Jackpot (any weight, >=10000 value)"
+    action: sell
+    when:
+      value_ge: 10000

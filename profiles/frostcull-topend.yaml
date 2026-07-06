@@ -1,0 +1,82 @@
+# Frostcull — top-end / XP-centric keep list.
+# Grabs the high-value progression + XP items and ignores everything else.
+# Rules are name-matches (regex, substring). Names marked (verify) are best-guess
+# from the Frostcull wiki — confirm the exact in-game spelling and tweak if a rule
+# never fires. Switch to this profile for general hunting; use the trinket-only
+# profile for focused Olthoi farming.
+
+rules:
+  # --- XP powerhouse: 1,000,000,000 XP each at the Casino Trinket Collector ---
+  - name: "Ancient Empyrean Trinkets"
+    action: keep
+    when:
+      name_matches: "Ancient Empyrean Trinket"
+
+  - name: "Ancient Falatacot Trinkets (verify)"
+    action: keep
+    when:
+      name_matches: "Ancient Falatacot Trinket"
+
+  # --- Keys: one match catches Legendary + Durable Legendary + Ultra Durable ---
+  - name: "Legendary Keys (all tiers)"
+    action: keep
+    when:
+      name_matches: "Legendary Key|Durable Legendary"
+
+  # --- Top-tier: opens Mythic/T10 chests ---
+  - name: "Mythic Keys"
+    action: keep
+    when:
+      name_matches: "Mythic Key"
+
+  # --- Mythic Key currency ---
+  - name: "Medallions of the Coven"
+    action: keep
+    when:
+      name_matches: "Medallion of the Coven"
+
+  # --- Currencies (mostly turn-in drops; harmless if they never appear) ---
+  - name: "MMDs (verify)"
+    action: keep
+    when:
+      name_matches: "MMD"
+
+  - name: "Serpent Coins (verify)"
+    action: keep
+    when:
+      name_matches: "Serpent Coin"
+
+  # --- Other high-value items from the wiki research. Mostly Wishing-Well /
+  #     turn-in items rather than mob loot, so they may rarely appear while
+  #     hunting -- harmless either way. Names are (verify); confirm in-game. ---
+  - name: "Exp & Lum Certificates (verify)"
+    action: keep
+    when:
+      name_matches: "Certificate"
+
+  - name: "Boss Tokens & Coins (verify)"
+    action: keep
+    when:
+      name_matches: "Boss Token|Boss Coin"
+
+  - name: "Infinite Ivory & Leather (verify)"
+    action: keep
+    when:
+      name_matches: "Infinite Ivory|Infinite Leather"
+
+  - name: "Augmentation Gems & Stipends (verify)"
+    action: keep
+    when:
+      name_matches: "Augmentation Gem|Stipend"
+
+  - name: "Pieces of Eight (verify)"
+    action: keep
+    when:
+      name_matches: "Pieces of Eight"
+
+  # --- Festivus Labyrinth reward. Anchored (^...$) so it ONLY matches an item
+  #     named exactly "Present"/"Presents" and never something merely containing it.
+  - name: "Festivus Present"
+    action: keep
+    when:
+      name_matches: "^Presents?$"

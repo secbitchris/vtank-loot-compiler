@@ -1,0 +1,73 @@
+# Thistlecrown — leveling loot profile for a BOW character (~level 47).
+#
+# Thistlecrown is a retail-accurate PvE server ("Recreation of Thistledown" on
+# ACE), so this is CLASSIC loot-gen looting — cash + the odd gear upgrade — NOT
+# the custom name-matching we use on Frostcull.
+#
+# Build: bow-oriented (Missile Weapons), Melee Defense, spec Fletching, trained
+# Arcane Lore + Life + Item Enchantment + Healing. Goal: CASH (no salvage).
+#
+# Rules evaluate top-down, FIRST MATCH WINS. Order is deliberate:
+#   1. Always-grab utility & liquid value (trade notes, mana stones, kits)
+#   2. Gear YOU can use (cast bows, cast armor, buff jewelry) — Arcane Lore
+#      trained means you can actually activate the spells on loot gear.
+#   3. Cash: sell everything else above a value floor.
+# Anything matched by nothing is left on the corpse. Loot melee weapons are
+# useless to a bow build, so they fall through to the sell rule (rule 3).
+#
+# Compile: python utl_compile.py profiles/thistlecrown-leveling.yaml -o ThistlecrownLevel.utl
+
+rules:
+  # ---------- 1. Utility & liquid value: always grab ----------
+  - name: "Trade Notes (portable cash)"
+    action: keep
+    when:
+      type: TradeNote
+
+  - name: "Mana Stones (re-mana gear or sell)"
+    action: keep
+    when:
+      type: ManaStone
+
+  - name: "Healing Kits"
+    action: keepupto
+    count: 2
+    when:
+      type: HealingKit
+
+  # ---------- 2. Gear you can actually use ----------
+  # Upgrade bows are "cast" launchers with a useful spell combo (Heart Seeker,
+  # Defender, Blood Drinker, elemental rends). Bows carry no base damage, so we
+  # filter by spell count, not damage. Inspect keepers; sell the rest.
+  - name: "Cast bows / launchers (potential upgrade)"
+    action: keep
+    when:
+      type: MissileWeapon
+      spell_count_ge: 3
+
+  # Cast armor above an AL floor — Arcane Lore lets you use the spells. Raise the
+  # AL floor as your own set climbs. Requires spells so we skip plain shells.
+  - name: "High-AL cast armor (potential upgrade)"
+    action: keep
+    when:
+      type: Armor
+      armor_level_ge: 200
+      spell_count_ge: 2
+
+  # Buff jewelry (rings/necklaces) with several spells — attribute/skill/vuln
+  # pieces you can activate with Arcane Lore.
+  - name: "Multi-spell jewelry"
+    action: keep
+    when:
+      type: Jewelry
+      spell_count_ge: 3
+
+  # ---------- 3. Cash: sell the remaining valuable magic loot ----------
+  # No type restriction = catch-all vendor rule. High-workmanship items land
+  # here too (WK raises value, so they clear the floor). Floor set to 2000 for
+  # burden economy (buffed Str ~130 = limited carry). Lower it toward 1000 once
+  # you have burden headroom (more Str, packs); raise it if you still encumber.
+  - name: "Sell everything else of value"
+    action: sell
+    when:
+      value_ge: 2000

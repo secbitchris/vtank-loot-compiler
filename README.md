@@ -74,6 +74,7 @@ block whose conditions are **AND-ed** together.
 | `type: <ObjectClass>` | item class: `MeleeWeapon`, `MissileWeapon`, `Armor`, `Clothing`, `Jewelry`, `Gem`, `WandStaffOrb`, `Food`, `Scroll`, `Salvage`, … |
 | `name_matches: "<regex>"` | item name (regular expression, `|` = OR) |
 | `value_ge` / `value_le` | item Value (pyreals) ≥ / ≤ |
+| `burden_ge` / `burden_le` | item Burden (weight) ≥ / ≤ — pair with `value_*` for value-density looting |
 | `workmanship_ge` | item workmanship ≥ |
 | `armor_level_ge` / `armor_level_le` | armor level ≥ / ≤ |
 | `min_damage_ge` | computed min damage ≥ (weapons) |

@@ -1,0 +1,29 @@
+# Consolidation profile for /ub ig — the high-value, bankable items you want to
+# funnel from farmers onto a single banker/mule. Deliberately excludes currencies
+# you spend (MMDs, Serpent Coins) and the Festivus Present (open it, don't mule it).
+
+rules:
+  - name: "Ancient Empyrean Trinkets"
+    action: keep
+    when:
+      name_matches: "Ancient Empyrean Trinket"
+
+  - name: "Ancient Falatacot Trinkets"
+    action: keep
+    when:
+      name_matches: "Ancient Falatacot Trinket"
+
+  - name: "Legendary Keys (all tiers)"
+    action: keep
+    when:
+      name_matches: "Legendary Key|Durable Legendary"
+
+  - name: "Mythic Keys"
+    action: keep
+    when:
+      name_matches: "Mythic Key"
+
+  - name: "Medallions of the Coven"
+    action: keep
+    when:
+      name_matches: "Medallion of the Coven"
