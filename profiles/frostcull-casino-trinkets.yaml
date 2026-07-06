@@ -6,6 +6,8 @@
 # Compile:  python utl_compile.py profiles/frostcull-casino-trinkets.yaml -o AncientTrinkets.utl
 # Then drop AncientTrinkets.utl in your Virindi Tank folder and pick it on the Loot tab.
 
+out: AncientTrinkets.utl
+
 rules:
   - name: "Ancient Empyrean Trinkets"
     action: keep

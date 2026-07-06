@@ -2,6 +2,8 @@
 # funnel from farmers onto a single banker/mule. Deliberately excludes currencies
 # you spend (MMDs, Serpent Coins) and the Festivus Present (open it, don't mule it).
 
+out: MuleValuables.utl
+
 rules:
   - name: "Ancient Empyrean Trinkets"
     action: keep

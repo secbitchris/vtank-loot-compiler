@@ -16,6 +16,9 @@
 # useless to a bow build, so they fall through to the sell rule (rule 3).
 #
 # Compile: python utl_compile.py profiles/thistlecrown-leveling.yaml -o ThistlecrownLevel.utl
+# Or just run `py -3 deploy.py` to compile every profile into the VTank folder.
+
+out: ThistlecrownLevel.utl
 
 rules:
   # ---------- 1. Utility & liquid value: always grab ----------

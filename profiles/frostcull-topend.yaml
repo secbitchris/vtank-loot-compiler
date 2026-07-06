@@ -5,6 +5,8 @@
 # never fires. Switch to this profile for general hunting; use the trinket-only
 # profile for focused Olthoi farming.
 
+out: FrostcullTopEnd.utl
+
 rules:
   # --- XP powerhouse: 1,000,000,000 XP each at the Casino Trinket Collector ---
   - name: "Ancient Empyrean Trinkets"

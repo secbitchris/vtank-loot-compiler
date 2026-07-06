@@ -12,6 +12,9 @@
 # else is `sell` so VTank auto-vendors it near a shopkeeper.
 #
 # Compile: python utl_compile.py profiles/thistlecrown-cashfarm.yaml -o ThistlecrownCash.utl
+# Or just run `py -3 deploy.py` to compile every profile into the VTank folder.
+
+out: ThistlecrownCash.utl
 
 rules:
   # ---------- Currency & near-weightless value: always grab ----------

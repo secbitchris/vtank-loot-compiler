@@ -90,6 +90,11 @@ subset. Adding more is a one-line entry in `utl_compile.py`.
 2. `python utl_compile.py loot.yaml -o my.utl` (copy into the Virindi Tank folder).
 3. In-game: Loot tab → re-select the profile to reload the edited rules.
 
+For a whole folder of profiles, `python deploy.py` recompiles every
+`profiles/*.yaml` and copies the `.utl` straight into the VTank plugin folder in
+one shot (each profile names its output via a top-level `out:` key). Use
+`--dry-run` to preview, `--vtank <path>` to override the destination.
+
 Profile switching can also be automated from VTank metas / UtilityBelt commands,
 so you can bind different profiles (e.g. "cash farm" vs "hunt rares") to hotkeys or
 triggers.
