@@ -42,3 +42,43 @@ rules:
     action: keep
     when:
       name_matches: "Trade Note|Promissory Note"
+
+  # Coalesced Aetheria: valuable raw drop to bank (mirrors the hunting profile).
+  # Scoped to "Coalesced" so we don't mule slotted/in-use Aetheria or Mana Stones.
+  - name: "Coalesced Aetheria"
+    action: keep
+    when:
+      name_matches: "Coalesced Aetheria"
+
+  # ---------- Collectibles to consolidate on Deus (mirrors hunting profile) ----------
+  # "Pack [A-Z]" = novelty pack pets/dolls only; never real backpacks (class 10).
+  - name: "Pack pets / dolls (novelty)"
+    action: keep
+    when:
+      name_matches: "Pack [A-Z]"
+
+  - name: "Golden Gromnies"
+    action: keep
+    when:
+      name_matches: "Golden Gromnie"
+
+  - name: "Idol Gems"
+    action: keep
+    when:
+      name_matches: "Idol Gem"
+
+  - name: "Lucky Letters"
+    action: keep
+    when:
+      name_matches: "Lucky.*Letter"
+
+  - name: "Writs of Refuge"
+    action: keep
+    when:
+      name_matches: "Writ of Refuge"
+
+  # (pending) Unvalidated spelling — none held at scan time. Harmless until it hits.
+  - name: "Dread Mattekar Paws (pending)"
+    action: keep
+    when:
+      name_matches: "Dread Mattekar Paw"

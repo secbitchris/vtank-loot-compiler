@@ -108,6 +108,46 @@ rules:
     when:
       name_matches: "Coalesced Aetheria"
 
+  # ---------- Collectibles & novelty valuables (names validated against live
+  #            inventory 2026-07 unless marked pending). ----------
+  # Novelty "pack" pets/dolls: Pack Scarecrow/Golem/Aerbax/Drudge/Harbinger,
+  # Abominable Pack Snowman, Rare Pink Pack Idol, Mr. P. Holiday Pack Doll.
+  # "Pack [A-Z]" (Pack + space + capital) matches all of these but NOT your real
+  # backpacks (named just "Pack", class 10) or the "Pumpkin Backpack" container.
+  - name: "Pack pets / dolls (novelty)"
+    action: keep
+    when:
+      name_matches: "Pack [A-Z]"
+
+  - name: "Golden Gromnies"
+    action: keep
+    when:
+      name_matches: "Golden Gromnie"
+
+  # "Idol Gem" only — deliberately not matching "Rare Pink Pack Idol" (caught above).
+  - name: "Idol Gems"
+    action: keep
+    when:
+      name_matches: "Idol Gem"
+
+  # Catches "Lucky Gold Letter" + any color variants; NOT "Letter From Home".
+  - name: "Lucky Letters"
+    action: keep
+    when:
+      name_matches: "Lucky.*Letter"
+
+  - name: "Writs of Refuge"
+    action: keep
+    when:
+      name_matches: "Writ of Refuge"
+
+  # (pending) None held at scan time (only Mattekar / Hide / Horn seen) — confirm
+  # exact spelling on the next drop. Harmless no-op until it matches.
+  - name: "Dread Mattekar Paws (pending)"
+    action: keep
+    when:
+      name_matches: "Dread Mattekar Paw"
+
   # --- Festivus Labyrinth reward. Anchored (^...$) so it ONLY matches an item
   #     named exactly "Present"/"Presents" and never something merely containing it.
   - name: "Festivus Present"

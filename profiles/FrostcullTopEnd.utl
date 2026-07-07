@@ -1,6 +1,6 @@
 UTL
 1
-16
+22
 Ancient Empyrean Trinkets
 
 0;1;1
@@ -92,6 +92,42 @@ Coalesced Aetheria
 0;1;1
 23
 Coalesced Aetheria
+1
+Pack pets / dolls (novelty)
+
+0;1;1
+15
+Pack [A-Z]
+1
+Golden Gromnies
+
+0;1;1
+19
+Golden Gromnie
+1
+Idol Gems
+
+0;1;1
+13
+Idol Gem
+1
+Lucky Letters
+
+0;1;1
+18
+Lucky.*Letter
+1
+Writs of Refuge
+
+0;1;1
+19
+Writ of Refuge
+1
+Dread Mattekar Paws (pending)
+
+0;1;1
+23
+Dread Mattekar Paw
 1
 Festivus Present
 
