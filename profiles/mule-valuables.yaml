@@ -3,6 +3,7 @@
 # you spend (MMDs, Serpent Coins) and the Festivus Present (open it, don't mule it).
 
 out: MuleValuables.utl
+itemgiver: true   # also deploy to UtilityBelt's itemgiver folder for `/ub ig`
 
 rules:
   - name: "Ancient Empyrean Trinkets"

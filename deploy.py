@@ -25,6 +25,9 @@ import utl
 import utl_compile
 
 DEFAULT_VTANK = r"C:\Games\VirindiPlugins\VirindiTank"
+# UtilityBelt reads ItemGiver (/ub ig) profiles from its OWN folder, not VTank's.
+DEFAULT_ITEMGIVER = os.path.expanduser(
+    r"~\Documents\Decal Plugins\UtilityBelt\itemgiver")
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROFILES = os.path.join(HERE, "profiles")
 
@@ -40,6 +43,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--vtank", default=DEFAULT_VTANK, help="VTank plugin folder")
+    ap.add_argument("--itemgiver", default=DEFAULT_ITEMGIVER,
+                    help="UtilityBelt ItemGiver folder (for profiles with itemgiver: true)")
     ap.add_argument("--dry-run", action="store_true", help="write nothing; just report")
     ap.add_argument("--only", default="", help="substring filter on the yaml filename")
     args = ap.parse_args()
@@ -64,16 +69,26 @@ def main():
         data = utl.dump(profile)
         assert utl.dump(utl.parse(data)) == data, f"{name}: round-trip self-check failed"
 
+        dests = [os.path.join(PROFILES, name), os.path.join(args.vtank, name)]
+        # Give-profiles (itemgiver: true) also go to the UtilityBelt folder so
+        # `/ub ig <name> to <char>` can find them.
+        ig = bool((spec or {}).get("itemgiver")) and args.itemgiver
+        if ig:
+            dests.append(os.path.join(args.itemgiver, name))
+
         if args.dry_run:
+            extra = "  (+itemgiver)" if ig else ""
             print(f"[dry] {base:34s} -> {name:22s} "
-                  f"{len(profile.rules):2d} rules -> {args.vtank}")
+                  f"{len(profile.rules):2d} rules -> {args.vtank}{extra}")
             continue
 
-        for dest in (os.path.join(PROFILES, name), os.path.join(args.vtank, name)):
+        for dest in dests:
+            os.makedirs(os.path.dirname(dest), exist_ok=True)
             with open(dest, "wb") as f:
                 f.write(data)
         print(f"ok  {base:34s} -> {name:22s} "
-              f"{len(profile.rules):2d} rules, {len(data)} bytes")
+              f"{len(profile.rules):2d} rules, {len(data)} bytes"
+              f"{'  (+itemgiver)' if ig else ''}")
 
     if not args.dry_run:
         print(f"\nDeployed to {args.vtank}. In-game: reload VTank or re-open the "
