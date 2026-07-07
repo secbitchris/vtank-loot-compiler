@@ -29,3 +29,15 @@ rules:
     action: keep
     when:
       name_matches: "Medallion of the Coven"
+
+  # Bankable mob-loot currency (Bak'tshay-tier drops) -> Relic Imbue Gems.
+  - name: "Resplendent Coins"
+    action: keep
+    when:
+      name_matches: "Resplendent Coin"
+
+  # Liquid cash to consolidate onto the banker (confirmed held by all farmers).
+  - name: "Trade & Promissory Notes"
+    action: keep
+    when:
+      name_matches: "Trade Note|Promissory Note"

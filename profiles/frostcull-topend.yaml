@@ -1,20 +1,27 @@
 # Frostcull — top-end / XP-centric keep list.
 # Grabs the high-value progression + XP items and ignores everything else.
-# Rules are name-matches (regex, substring). Names marked (verify) are best-guess
-# from the Frostcull wiki — confirm the exact in-game spelling and tweak if a rule
-# never fires. Switch to this profile for general hunting; use the trinket-only
-# profile for focused Olthoi farming.
+# Rules are name-matches (regex, substring). Validated against the Frostcull wiki
+# (2026-07): names below are confirmed unless marked (pending). Switch to this
+# profile for general hunting; use the trinket-only profile for focused Olthoi
+# farming.
 
 out: FrostcullTopEnd.utl
 
 rules:
-  # --- XP powerhouse: 1,000,000,000 XP each at the Casino Trinket Collector ---
+  # --- XP powerhouse: 1,000,000,000 XP each at the Casino Trinket Collector.
+  #     Name pending re-confirmation on the next live drop: none were in any
+  #     farmer's inventory to check against (they're turned in on the spot).
+  #     NB: the "Pathwarden Trinket" every char carries is a DIFFERENT item — an
+  #     EQUIPPED XP-bonus augmentation — deliberately NOT looted here. ---
   - name: "Ancient Empyrean Trinkets"
     action: keep
     when:
       name_matches: "Ancient Empyrean Trinket"
 
-  - name: "Ancient Falatacot Trinkets (verify)"
+  # (pending) Retail AC item. Validated against live inventory of all 6 farmers
+  # (2026-07): zero held, and no Frostcull evidence it drops here. Harmless no-op
+  # kept only as a safety net — remove once confirmed it never appears in-game.
+  - name: "Ancient Falatacot Trinkets (pending)"
     action: keep
     when:
       name_matches: "Ancient Falatacot Trinket"
@@ -37,44 +44,69 @@ rules:
     when:
       name_matches: "Medallion of the Coven"
 
-  # --- Currencies (mostly turn-in drops; harmless if they never appear) ---
-  - name: "MMDs (verify)"
+  # --- Currencies (confirmed) ---
+  - name: "MMDs"
     action: keep
     when:
       name_matches: "MMD"
 
-  - name: "Serpent Coins (verify)"
+  - name: "Serpent Coins"
     action: keep
     when:
       name_matches: "Serpent Coin"
 
-  # --- Other high-value items from the wiki research. Mostly Wishing-Well /
-  #     turn-in items rather than mob loot, so they may rarely appear while
-  #     hunting -- harmless either way. Names are (verify); confirm in-game. ---
-  - name: "Exp & Lum Certificates (verify)"
+  # Resplendent Coins: ACTUAL mob loot (Bak'tshay Seer / Slaver / Deity and up),
+  # unlike the turn-in currencies. Spent with Bjorn for Relic Imbue Gems.
+  - name: "Resplendent Coins"
+    action: keep
+    when:
+      name_matches: "Resplendent Coin"
+
+  # Liquid cash confirmed held by all 6 farmers (Trade Note (250,000) etc.).
+  - name: "Trade & Promissory Notes"
+    action: keep
+    when:
+      name_matches: "Trade Note|Promissory Note"
+
+  # --- Wishing-Well / high-value items (confirmed). Mostly turn-in rather than
+  #     mob loot, so they rarely appear while hunting -- harmless either way. ---
+  - name: "Exp & Lum Certificates"
     action: keep
     when:
       name_matches: "Certificate"
 
-  - name: "Boss Tokens & Coins (verify)"
+  - name: "Boss Tokens"
     action: keep
     when:
-      name_matches: "Boss Token|Boss Coin"
+      name_matches: "Boss Token"
 
-  - name: "Infinite Ivory & Leather (verify)"
-    action: keep
+  # Wiki says "save 1 of each" -> keepupto 1, split so each name caps separately
+  # (a single rule would cap the two names combined at 1).
+  - name: "Infinite Ivory"
+    action: keepupto
+    count: 1
     when:
-      name_matches: "Infinite Ivory|Infinite Leather"
+      name_matches: "Infinite Ivory"
 
-  - name: "Augmentation Gems & Stipends (verify)"
+  - name: "Infinite Leather"
+    action: keepupto
+    count: 1
+    when:
+      name_matches: "Infinite Leather"
+
+  # Stipends are the same item as "Aug Gems" (both names in use).
+  - name: "Augmentation Gems / Stipends"
     action: keep
     when:
       name_matches: "Augmentation Gem|Stipend"
 
-  - name: "Pieces of Eight (verify)"
+  # Coalesced Aetheria: valuable end-game drop (the raw form you combine).
+  # Confirmed held by multiple farmers. Not matching plain "Aetheria" here so we
+  # don't sweep up Aetheria Mana Stones / slotted Aetheria you're already using.
+  - name: "Coalesced Aetheria"
     action: keep
     when:
-      name_matches: "Pieces of Eight"
+      name_matches: "Coalesced Aetheria"
 
   # --- Festivus Labyrinth reward. Anchored (^...$) so it ONLY matches an item
   #     named exactly "Present"/"Presents" and never something merely containing it.
