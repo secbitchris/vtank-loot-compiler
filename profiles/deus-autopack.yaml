@@ -1,0 +1,24 @@
+# Deus (mule / monarch) auto-organizer for Mag-Tools AutoPack.
+# Run ON Deus:  /mt autopack   (or Ctrl+P via Virindi Hotkey System)
+#
+# WHY THIS EXISTS: player-to-player gives (/ub ig) only ever land in the
+# recipient's MAIN pack -- never side packs. So after a few gives Deus's main
+# pack fills and further gives silently transfer 0 items. This profile sweeps
+# everything OUT of the main pack into side packs 1-7, keeping the main pack
+# clear for the next batch. Equipped items are never touched by AutoPack.
+#
+# KEY MECHANIC: for Mag-Tools, the keepupto "count" is a PACK DESIGNATOR, not a
+# quantity:  0 = main pack, 1 = side pack 1, 1234567 = "any of side packs 1-7".
+#
+# Deploy:  py -3 deploy.py --only deus-autopack   (lands in the Mag-Tools folder)
+
+out: Deus.autopack.utl
+magtools: true
+
+rules:
+  # Everything -> side packs 1-7, leaving the main pack empty for incoming gives.
+  - name: "All inventory -> side packs"
+    action: keepupto
+    count: 1234567
+    when:
+      name_matches: ".*"

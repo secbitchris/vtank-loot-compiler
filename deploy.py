@@ -28,6 +28,8 @@ DEFAULT_VTANK = r"C:\Games\VirindiPlugins\VirindiTank"
 # UtilityBelt reads ItemGiver (/ub ig) profiles from its OWN folder, not VTank's.
 DEFAULT_ITEMGIVER = os.path.expanduser(
     r"~\Documents\Decal Plugins\UtilityBelt\itemgiver")
+# Mag-Tools AutoPack reads <CharName>.autopack.utl from its own folder.
+DEFAULT_MAGTOOLS = os.path.expanduser(r"~\Documents\Decal Plugins\Mag-Tools")
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROFILES = os.path.join(HERE, "profiles")
 
@@ -45,6 +47,8 @@ def main():
     ap.add_argument("--vtank", default=DEFAULT_VTANK, help="VTank plugin folder")
     ap.add_argument("--itemgiver", default=DEFAULT_ITEMGIVER,
                     help="UtilityBelt ItemGiver folder (for profiles with itemgiver: true)")
+    ap.add_argument("--magtools", default=DEFAULT_MAGTOOLS,
+                    help="Mag-Tools folder (for autopack profiles with magtools: true)")
     ap.add_argument("--dry-run", action="store_true", help="write nothing; just report")
     ap.add_argument("--only", default="", help="substring filter on the yaml filename")
     args = ap.parse_args()
@@ -69,17 +73,23 @@ def main():
         data = utl.dump(profile)
         assert utl.dump(utl.parse(data)) == data, f"{name}: round-trip self-check failed"
 
-        dests = [os.path.join(PROFILES, name), os.path.join(args.vtank, name)]
-        # Give-profiles (itemgiver: true) also go to the UtilityBelt folder so
-        # `/ub ig <name> to <char>` can find them.
+        # Mag-Tools autopack profiles go to the Mag-Tools folder instead of the
+        # VTank loot folder (they aren't loot profiles). Give-profiles also go to
+        # the UtilityBelt itemgiver folder.
+        mt = bool((spec or {}).get("magtools")) and args.magtools
         ig = bool((spec or {}).get("itemgiver")) and args.itemgiver
-        if ig:
-            dests.append(os.path.join(args.itemgiver, name))
+        dests = [os.path.join(PROFILES, name)]
+        if mt:
+            dests.append(os.path.join(args.magtools, name))
+        else:
+            dests.append(os.path.join(args.vtank, name))
+            if ig:
+                dests.append(os.path.join(args.itemgiver, name))
+        tag = "  (+magtools)" if mt else ("  (+itemgiver)" if ig else "")
 
         if args.dry_run:
-            extra = "  (+itemgiver)" if ig else ""
             print(f"[dry] {base:34s} -> {name:22s} "
-                  f"{len(profile.rules):2d} rules -> {args.vtank}{extra}")
+                  f"{len(profile.rules):2d} rules{tag}")
             continue
 
         for dest in dests:
@@ -87,8 +97,7 @@ def main():
             with open(dest, "wb") as f:
                 f.write(data)
         print(f"ok  {base:34s} -> {name:22s} "
-              f"{len(profile.rules):2d} rules, {len(data)} bytes"
-              f"{'  (+itemgiver)' if ig else ''}")
+              f"{len(profile.rules):2d} rules, {len(data)} bytes{tag}")
 
     if not args.dry_run:
         print(f"\nDeployed to {args.vtank}. In-game: reload VTank or re-open the "

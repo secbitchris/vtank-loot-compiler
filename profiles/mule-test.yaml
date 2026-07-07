@@ -1,0 +1,14 @@
+# DIAGNOSTIC ONLY — single simple keep rule to isolate the /ub ig "0 items" bug.
+# Run from Lenin (holds 15 Idol Gems), standing by Deus:
+#     /ub ig MuleTest.utl to Deus
+# If it gives 15 -> a rule in MuleValuables (likely a regex) breaks UB; we bisect.
+# If it gives 0  -> the problem is UB-side, not our profile content.
+
+out: MuleTest.utl
+itemgiver: true
+
+rules:
+  - name: "TEST Idol Gems"
+    action: keep
+    when:
+      name_matches: "Idol Gem"
