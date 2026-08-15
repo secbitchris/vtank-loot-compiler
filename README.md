@@ -131,6 +131,36 @@ when:
   name_matches: ["Olthoi", "Celdon"]   # name must match BOTH patterns
 ```
 
+### Identify cost — rule order is a performance decision
+
+VTank can evaluate some conditions on an unidentified item and not others.
+`cLootRules.NeedsID` walks the rules top-down: if a rule matches using only
+ID-free conditions, the item is classified immediately; if it first reaches a
+rule that needs an identified property, VTank has to ID the item before it can
+decide. **So put ID-free rules that catch common items above the rest.**
+
+| free (no ID) | needs an identify |
+|---|---|
+| `type`, `name_matches` | `full_description_matches` and other string keys |
+| `value_ge` / `value_le` | `total_value_*` |
+| `stack_count_*`, `material_*`, `icon_*`, `equipable_slots_*` | `burden_*`, `armor_level_*`, `workmanship_*`, `spellcraft_*` |
+| **`salvage_workmanship_*`** | `attack_bonus_*`, `damage_bonus_*`, `variance_*`, `melee_defense_bonus_*` |
+| `char_level_*`, `char_skill_ge`, `main_pack_empty_slots_ge` | `spell_count_ge`, `spell_match`, `spell_name_matches` |
+| the colour rules, `damage_percent_ge` | `min_damage_ge`, `total_ratings_ge`, everything `buffed_*` |
+
+29 of the 171 int keys are usable without an ID; the rest are not.
+
+> **`salvage_workmanship_ge` is the one you usually want, not `workmanship_ge`.**
+> `IntValueKey.Workmanship` (105) and `DoubleValueKey.SalvageWorkmanship` carry
+> the same number — measured across 252 identified items in a Virindi Global
+> Inventory scan, they agreed in every case — but only the latter is readable
+> without identifying the item. That is why VTank's own GUI profiles use it
+> exclusively: key 105 appears zero times in 3,205 real requirements.
+
+Note that `burden_*` needs an ID, which makes value-density rules more expensive
+than they look; a `value_ge` or `type` gate above them will short-circuit most
+items.
+
 ## Importing an existing profile
 
 Already have a profile built in VTank's GUI? Pull it into YAML:
