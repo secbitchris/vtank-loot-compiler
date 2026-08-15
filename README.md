@@ -16,7 +16,7 @@ rules:
 
   - name: "Salvage decent armor"
     action: salvage
-    when: { type: Armor, workmanship_ge: 8 }
+    when: { type: Armor, salvage_workmanship_ge: 8 }
 ```
 
 ```sh

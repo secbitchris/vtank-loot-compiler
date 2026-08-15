@@ -29,7 +29,9 @@ rules:
     action: salvage
     when:
       type: Armor
-      workmanship_ge: 8
+      # salvage_workmanship_ge, not workmanship_ge: same number, but this one is
+      # readable WITHOUT identifying the item. See "Identify cost" in the README.
+      salvage_workmanship_ge: 8
 
   - name: "Vendor trash jewelry"
     action: sell
