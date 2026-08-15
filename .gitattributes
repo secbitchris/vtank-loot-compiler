@@ -1,0 +1,5 @@
+# .utl is a CRLF format whose requirement bodies carry byte length prefixes.
+# If git normalises line endings, the stored bytes become LF, the length codes
+# stop matching the bodies they describe, and the file no longer parses on any
+# platform that doesn't convert back on checkout. Never translate these.
+*.utl -text
