@@ -4,16 +4,26 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Public-only Ubuntu VM, reset between jobs; never the private LAN runner.
+    runs-on: [self-hosted, linux, x64, homelab-isolated-public]
+    timeout-minutes: 20
     strategy:
       matrix:
         python-version: ["3.8", "3.12"]
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install -r requirements.txt
+      - run: |
+          python -m venv "$RUNNER_TEMP/venv"
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
+          "$RUNNER_TEMP/venv/bin/python" -m pip install -r requirements.txt
       - run: python tests/test_roundtrip.py
